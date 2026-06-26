@@ -4,11 +4,12 @@
 
 ## ✨ Tính năng
 
+- **CUSTOM THANH TOÁN TỰ ĐỘNG FREE**, custom order link, QR, theo dõi theo Description làm mã đơn, có thể tự implement các phương pháp khác nhau.
+- 🔔 **Webhook dispatcher** — Zalo, Telegram, Google Sheet custom HTTP, có thể cấu hình để nhận thông báo chuyển tiền, nhận tiền về hệ thống khác.
 - 🔐 **Authentication** với OTP flow + session persistence
 - 👥 **Multi-account management** với proxy/BrowserID linh hoạt per-account
-- ⏰ **Auto-payment scheduler** (flagship) — lập lịch chuyển khoản định kỳ, cron, conditional
+- ⏰ **Auto-payment scheduler** — lập lịch chuyển khoản định kỳ, cron, conditional
 - 📊 **Transaction history** với query nâng cao, categorization, export Excel/CSV/JSON
-- 🔔 **Webhook dispatcher** — Discord, Telegram, custom HTTP
 - 📈 **Real-time monitoring** — balance threshold alerts, transaction detection
 - 🔄 **Sync + Async API** song song
 - 💻 **CLI tool** (`pgbank` command)
@@ -17,6 +18,7 @@
 ## 📦 Cài đặt
 
 ```bash
+# ( chưa đẩy lên thư viện), tạm thời clone về.
 pip install pgbank-unofficial
 ```
 
@@ -193,6 +195,4 @@ pgbank schedule add --name "..." --cron "0 9 5 * *" --account alice --to MOM_ACC
 
 MIT License — see [LICENSE](LICENSE).
 
-## 🙏 Credits
-
-- Tham khảo: [VCB-API](https://github.com/netrotion/VCB-API)
+## Minhdevtry
