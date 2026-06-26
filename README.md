@@ -1,4 +1,4 @@
-# pgbank-unofficial
+# PGBank Unofficial API ( tài khoản cá nhân )
 
 > **Unofficial Python library cho PGBank API** — Multi-account, scheduled payments, webhooks, transaction history & nhiều hơn nữa.
 
@@ -195,5 +195,4 @@ MIT License — see [LICENSE](LICENSE).
 
 ## 🙏 Credits
 
-- Tác giả: [LeVietHung](https://github.com/netrotion)
-- Tham khảo: [VCB-API](https://github.com/netrotion/VCB-API) (project cùng tác giả cho Vietcombank)
+- Tham khảo: [VCB-API](https://github.com/netrotion/VCB-API)
