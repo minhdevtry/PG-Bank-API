@@ -1,0 +1,114 @@
+[build-system]
+requires = ["hatchling>=1.18"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pgbank-unofficial"
+version = "0.1.0"
+description = "Unofficial Python library for PGBank API with multi-account, auto-payment scheduling, webhooks, and transaction history"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+authors = [{ name = "LeVietHung", email = "dinhnhatminh.minhkhanh@gmail.com" }]
+keywords = ["pgbank", "banking", "api", "vietnam", "automation"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Office/Business :: Financial",
+]
+dependencies = [
+    "requests>=2.28",
+    "httpx>=0.24",
+    "cryptography>=38.0",
+    "pyyaml>=6.0",
+    "jinja2>=3.1",
+    "croniter>=2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-asyncio>=0.21",
+    "pytest-cov>=4.0",
+    "mypy>=1.0",
+    "ruff>=0.1",
+    "black>=23.0",
+    "respx>=0.21",
+    "httpx>=0.24",
+    "build>=1.0",
+    "twine>=4.0",
+]
+cli = [
+    "click>=8.0",
+    "typer>=0.9",
+]
+telegram = ["aiohttp>=3.8"]
+discord = []
+
+[project.urls]
+Homepage = "https://github.com/netrotion/pgbank-unofficial"
+Repository = "https://github.com/netrotion/pgbank-unofficial"
+Issues = "https://github.com/netrotion/pgbank-unofficial/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pgbank_unofficial"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+addopts = "-v --strict-markers --tb=short"
+markers = [
+    "integration: marks tests as integration tests requiring real API",
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+]
+
+[tool.mypy]
+# mypy 2.1 only supports Python 3.10+ even though library targets 3.9.
+# The library remains Python 3.9 compatible; this is just for type checking.
+python_version = "3.10"
+strict = false
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+ignore_missing_imports = true
+# Phase 1: PGBank's encrypted responses are untyped dicts, so .get() returns Any.
+# We'll add proper TypedDict schemas in Phase 1.1 and re-enable this check.
+disable_error_code = ["no-any-return"]
+
+[tool.ruff]
+line-length = 100
+# Library targets Python 3.9 — keep Optional[X] syntax (UP045/UP007 not enforced).
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "B", "A", "C4", "PT", "RET"]
+ignore = [
+    "E501",   # line too long (handled by black)
+    "UP045",  # Optional[X] -> X | None (need 3.10+; we support 3.9)
+    "UP007",  # Union[X, Y] -> X | Y (need 3.10+)
+    "A004",   # shadowing builtins (TimeoutError, etc. — intentional for library API)
+    "B008",   # function call in default argument (pytest.raises pattern is intentional)
+    "C408",   # unnecessary dict() call (style preference, not bug)
+]
+
+[tool.black]
+line-length = 100
+target-version = ["py39", "py310", "py311", "py312"]
+
+[tool.coverage.run]
+source = ["src/pgbank_unofficial"]
+omit = ["*/tests/*", "*/__pycache__/*"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+]
